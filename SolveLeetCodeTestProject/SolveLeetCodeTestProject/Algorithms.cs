@@ -1,32 +1,30 @@
-﻿using Newtonsoft.Json.Linq;
-
-namespace SolveLeetCodeTestProject;
+﻿namespace SolveLeetCodeTestProject;
 
 internal static class Algorithms
 {
     internal static int[] TwoSum(int[] nums, int target)
     {
-        var sortNums = nums.ToList().Select((n, idx) => new { idx, n }).ToDictionary(x => x.idx, x => x.n);
-        sortNums = sortNums.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-
-        var left = 0;
-        var right = nums.Length - 1;
-        var leftValue = sortNums.ElementAt(left).Value;
-        var rightValue = sortNums.ElementAt(right).Value;
+        var sortNums = nums.Select((n, idx) => new { n, idx })
+                .ToDictionary(x => x.idx, x => x.n)
+                .OrderBy(x => x.Value);
+        var leftIndex = 0;
+        var rightIndex = nums.Length - 1;
+        var leftValue = sortNums.ElementAt(leftIndex).Value;
+        var rightValue = sortNums.ElementAt(rightIndex).Value;
         while (leftValue + rightValue != target)
         {
             if (leftValue + rightValue < target)
             {
-                left++;
+                leftIndex++;
             }
             else if (leftValue + rightValue > target)
             {
-                right--;
+                rightIndex--;
             }
-            leftValue = sortNums.ElementAt(left).Value;
-            rightValue = sortNums.ElementAt(right).Value;
+            leftValue = sortNums.ElementAt(leftIndex).Value;
+            rightValue = sortNums.ElementAt(rightIndex).Value;
         }
-        return [sortNums.ElementAt(left).Key, sortNums.ElementAt(right).Key];
+        return [sortNums.ElementAt(leftIndex).Key, sortNums.ElementAt(rightIndex).Key];
     }
 
 }
