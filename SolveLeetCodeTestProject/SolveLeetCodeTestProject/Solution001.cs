@@ -1,6 +1,6 @@
 ﻿namespace SolveLeetCodeTestProject;
 
-internal static class Algorithms
+internal static class Solution001
 {
     internal static int[] TwoSum(int[] nums, int target)
     {
