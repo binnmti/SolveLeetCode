@@ -8,7 +8,7 @@ internal class ListNode(int val = 0, ListNode? next = null)
 
 internal static class ListNodeExtensions
 {
-    internal static ListNode GetListNode(this int[] ints)
+    internal static ListNode ToListNode(this int[] ints)
     {
         var head = new ListNode();
         var current = head;
@@ -20,7 +20,7 @@ internal static class ListNodeExtensions
         return head.next ?? new ListNode();
     }
 
-    internal static int[] GetArray(this ListNode? listNode)
+    internal static int[] ToArray(this ListNode? listNode)
     {
         var list = new List<int>();
         while (listNode != null)
@@ -30,4 +30,8 @@ internal static class ListNodeExtensions
         }
         return [.. list];
     }
+
+    internal static ListNode Reverse(this ListNode? listNode)
+        => listNode.ToArray().Reverse().ToArray().ToListNode();
+
 }

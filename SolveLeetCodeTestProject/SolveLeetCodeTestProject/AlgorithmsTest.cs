@@ -17,8 +17,8 @@ public class AlgorithmsTest
     [DataRow(new int[] { 0 }, new int[] { 0 }, new int[] { 0 })]
     public void AlgorithmsTest445(int[] l1, int[] l2, int[] expected)
     {
-        var actual = Solution445.AddTwoNumbers(l1.GetListNode(), l2.GetListNode());
-        CollectionAssert.AreEqual(expected, actual.GetArray());
+        var actual = Solution445.AddTwoNumbers(l1.ToListNode(), l2.ToListNode());
+        CollectionAssert.AreEqual(expected, actual.ToArray());
     }
 
     [TestMethod]
@@ -27,9 +27,9 @@ public class AlgorithmsTest
     [DataRow(new int[] { 9, 9, 9, 9, 9, 9, 9 }, new int[] { 9, 9, 9, 9 }, new int[] { 8, 9, 9, 9, 0, 0, 0, 1 })]
     public void AlgorithmsTest2(int[] l1, int[] l2, int[] expected)
     {
-        var actual = Solution002.AddTwoNumbers(l1.GetListNode(), l2.GetListNode());
+        var actual = Solution002.AddTwoNumbers(l1.ToListNode(), l2.ToListNode());
 
-        CollectionAssert.AreEqual(expected, actual.GetArray());
+        CollectionAssert.AreEqual(expected, actual.ToArray());
     }
 
     [TestMethod]
