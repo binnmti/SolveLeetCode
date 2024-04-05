@@ -1,15 +1,7 @@
-﻿using static SolveLeetCodeTestProject.Solution002;
-
-namespace SolveLeetCodeTestProject;
+﻿namespace SolveLeetCodeTestProject;
 
 internal static class Solution002
 {
-    internal class ListNode(int val = 0, ListNode? next = null)
-    {
-        public int val = val;
-        public ListNode? next = next;
-    }
-
     internal static ListNode AddTwoNumbers(ListNode? l1, ListNode? l2)
     {
         var listNode = new ListNode();
@@ -31,28 +23,3 @@ internal static class Solution002
     }
 }
 
-internal static class Solution2Extensions
-{
-    internal static ListNode GetListNode(this int[] ints)
-    {
-        var head = new ListNode();
-        var current = head;
-        foreach (var i in ints)
-        {
-            current.next = new ListNode(i);
-            current = current.next;
-        }
-        return head.next ?? new ListNode();
-    }
-
-    internal static int[] GetArray(this ListNode? listNode)
-    {
-        var list = new List<int>();
-        while (listNode != null)
-        {
-            list.Add(listNode.val);
-            listNode = listNode.next;
-        }
-        return [.. list];
-    }
-}

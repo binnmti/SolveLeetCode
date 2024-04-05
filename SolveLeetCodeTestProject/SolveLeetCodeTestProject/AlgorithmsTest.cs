@@ -4,6 +4,24 @@ namespace SolveLeetCodeTestProject;
 public class AlgorithmsTest
 {
     [TestMethod]
+    [DataRow("abcabcbb", 3)]
+    public void AlgorithmsTest3(string s, int expected)
+    {
+        var actual = Solution003.LengthOfLongestSubstring(s);
+        Assert.Equals(expected, actual);
+    }
+
+    [TestMethod]
+    [DataRow(new int[] { 7, 2, 4, 3 }, new int[] { 5, 6, 4 }, new int[] { 7, 8, 0, 7 })]
+    [DataRow(new int[] { 2, 4, 3 }, new int[] { 5, 6, 4 }, new int[] { 8, 0, 7 })]
+    [DataRow(new int[] { 0 }, new int[] { 0 }, new int[] { 0 })]
+    public void AlgorithmsTest445(int[] l1, int[] l2, int[] expected)
+    {
+        var actual = Solution445.AddTwoNumbers(l1.GetListNode(), l2.GetListNode());
+        CollectionAssert.AreEqual(expected, actual.GetArray());
+    }
+
+    [TestMethod]
     [DataRow(new int[] { 2, 4, 3 }, new int[] { 5, 6, 4 }, new int[] { 7, 0, 8 })]
     [DataRow(new int[] { 0 }, new int[] { 0 }, new int[] { 0 })]
     [DataRow(new int[] { 9, 9, 9, 9, 9, 9, 9 }, new int[] { 9, 9, 9, 9 }, new int[] { 8, 9, 9, 9, 0, 0, 0, 1 })]
