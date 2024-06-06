@@ -2,21 +2,46 @@
 namespace SolveLeetCodeTestProject
 {
     internal class Solution2405
-    {
+    {    // private static bool IsHit(int goal, int start, string str)
+         //     => Enumerable.Range(start, goal - start).Any(j => str[goal] == str[j]);
+
+        // public int PartitionString(string s) 
+        // {
+        //     int partitionCounter = 1;
+        //     int startIndex = 0;
+        //     for (int i = 0; i < s.Length; i++)
+        //     {
+        //         if (IsHit(i, startIndex, s))
+        //         {
+        //             startIndex = i;
+        //             partitionCounter++;
+        //         }
+        //     }
+        //     return partitionCounter;
+        // }
+
         internal static int PartitionString(string s)
         {
-            int co = 1;
-            var hits = new List<char>();
+            int partitionCounter = 1;
+            int startIndex = 0;
             for (int i = 0; i < s.Length; i++)
             {
-                if (hits.Any(x => x == s[i]))
+                bool hit = false;
+                for (int j = i - 1; j >= startIndex; j--)
                 {
-                    co++;
-                    hits.Clear();
+                    if (s[i] == s[j])
+                    {
+                        hit = true;
+                        break;
+                    }
                 }
-                hits.Add(s[i]);
+                if (hit)
+                {
+                    startIndex = i;
+                    partitionCounter++;
+                }
             }
-            return co;
+            return partitionCounter;
         }
     }
 }
