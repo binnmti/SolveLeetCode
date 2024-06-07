@@ -6,6 +6,7 @@ public class AlgorithmsTest
     [TestMethod]
     [DataRow("abacaba", 4)]
     [DataRow("ssssss", 6)]
+    [DataRow("shkqbyutdvknyrpjof", 2)]
     public void AlgorithmsTest2405(string s, int expected)
     {
         var actual = Solution2405.PartitionString(s);
