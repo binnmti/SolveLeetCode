@@ -1,3 +1,5 @@
+using FluentAssertions;
+
 namespace SolveLeetCodeTestProject;
 
 [TestClass]
@@ -58,10 +60,19 @@ public class AlgorithmsTest
     [DataRow(new int[] { 2, 7, 11, 15 }, 9, new int[] { 0, 1 })]
     [DataRow(new int[] { 3, 2, 4 }, 6, new int[] { 1, 2 })]
     [DataRow(new int[] { 3, 3 }, 6, new int[] { 0, 1 })]
-    public void AlgorithmsTest1(int[] nums, int target, int[] expected)
+    public void AlgorithmsTest1(int[] numbers, int target, int[] expected)
     {
-        var actual = Solution001.TwoSum(nums, target);
+        // Arrange
 
-        CollectionAssert.AreEqual(expected, actual);
+        // Act
+        var actual = Solution001.TwoSum(numbers, target);
+
+        // Assert
+        actual.Should().BeEquivalentTo(expected);
+
+
+        //var actual = Solution001.TwoSum(nums, target);
+
+        //CollectionAssert.AreEqual(expected, actual);
     }
 }
