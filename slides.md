@@ -161,13 +161,13 @@ public void TestMethod1(int[] numbers, int target, int[] expected)
 
 # 計算量
 
-![alt text](image/complexity.png)
+![alt text](/image/complexity.png)
 
 ---
 
 # 計算量
 
-![alt text](image/complexityN.png)
+![alt text](/image/complexityN.png)
 
 ```
 
