@@ -175,7 +175,7 @@ private int[] TwoSum(int[] numbers, int target)
 
 ---
 
-# 計算量を係数を無視できる理由
+# 計算量で係数を無視できる理由
 
 ![alt text](/image/complexityN.png)
 
@@ -221,8 +221,6 @@ public void TestMethod1(int[] numbers, int target, int[] expected)
 
 ---
 
----
-
 # 時間計算量 O(N)　空間計算量 O(N)
 
 ```cs
@@ -244,3 +242,30 @@ private int[] TwoSum(int[] numbers, int target)
 ```
 
 ---
+
+# 時間計算量 O(N)　空間計算量 O(1)
+
+```cs
+private int[] TwoSum(int[] numbers, int target)
+{
+    var left = 0;
+    var right = numbers.Length - 1;
+    while(left < right)
+    {
+        var sum = numbers[left] + numbers[right];
+        if (sum == target)
+        {
+            return [left + 1, right + 1];
+        }
+        if (sum < target)
+        {
+            left++;
+        }
+        else
+        {
+            right--;
+        }
+    }
+    return [];
+}
+```

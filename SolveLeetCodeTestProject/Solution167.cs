@@ -5,14 +5,23 @@ internal class Solution167
 {
     internal static int[] TwoSum(int[] numbers, int target)
     {
-        var map = new Dictionary<int, int>();
-        for (int i = 0; i < numbers.Length; i++)
+        var left = 0;
+        var right = numbers.Length - 1;
+        while(left < right)
         {
-            if (map.TryGetValue(target - numbers[i], out var value))
+            var sum = numbers[left] + numbers[right];
+            if (sum == target)
             {
-                return [value + 1, i + 1];
+                return [left + 1, right + 1];
             }
-            map[numbers[i]] = i;
+            if (sum < target)
+            {
+                left++;
+            }
+            else
+            {
+                right--;
+            }
         }
         return [];
     }
