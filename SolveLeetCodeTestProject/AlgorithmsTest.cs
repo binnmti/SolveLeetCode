@@ -81,4 +81,11 @@ public class AlgorithmsTest
         actual.Should().BeEquivalentTo(expected);
     }
 
+    [TestMethod]
+    [DataRow(new int[] { 0, 1, 4, 6, 7, 10 }, 3, 2)]
+    public void AlgorithmsTest2367(int[] numbers, int diff, int expected)
+    {
+        var actual = Solution2367.ArithmeticTriplets(numbers, diff);
+        actual.Should().Be(expected);
+    }
 }
