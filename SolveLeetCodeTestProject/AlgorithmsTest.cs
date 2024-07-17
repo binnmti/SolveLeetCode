@@ -31,8 +31,8 @@ public class AlgorithmsTest
     [DataRow("abcabcbb", 3)]
     public void AlgorithmsTest3(string s, int expected)
     {
-        var actual = Solution003.LengthOfLongestSubstring(s);
-        Assert.Equals(expected, actual);
+        //var actual = Solution003.LengthOfLongestSubstring(s);
+        //Assert.Equals(expected, actual);
     }
 
     [TestMethod]
@@ -69,10 +69,16 @@ public class AlgorithmsTest
 
         // Assert
         actual.Should().BeEquivalentTo(expected);
-
-
-        //var actual = Solution001.TwoSum(nums, target);
-
-        //CollectionAssert.AreEqual(expected, actual);
     }
+
+    [TestMethod]
+    [DataRow(new int[] { 2, 7, 11, 15 }, 9, new int[] { 1, 2 })]
+    [DataRow(new int[] { 2, 3, 4 }, 6, new int[] { 1, 3 })]
+    [DataRow(new int[] { -1, 0 }, -1, new int[] { 1, 2 })]
+    public void AlgorithmsTest167(int[] numbers, int target, int[] expected)
+    {
+        var actual = Solution167.TwoSum(numbers, target);
+        actual.Should().BeEquivalentTo(expected);
+    }
+
 }

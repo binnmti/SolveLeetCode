@@ -27,9 +27,11 @@ h1 {
 }
 </style>
 
-# C# みんなでコードレビューを試す会 第0回
+# C# みんなでコードレビューを試す会
 
-# 松井 敏
+# 第0回
+
+## 松井 敏
 
 ---
 
@@ -50,10 +52,12 @@ h1 {
 - [167. Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
 - LeetCodeでもC#を選んで解くことは可能。インテリセンスが効かないなど制限もある。
 - ローカルでTestProjectを作る方がおススメ
+- LeetCodeは探せば幾らでも答えは書いてある。性善説で見ない前提。
+- 同じ理由でGithub Copilotは切っておいた方が良いかも。答えを提案されてしまう
 
 ---
 
-# TestProject
+# MSTest
 
 ```cs
 namespace TestProject1;
@@ -69,34 +73,13 @@ public class UnitTest1
     [TestMethod]
     public void TestMethod1()
     {
-        int[] numbers = [2, 7, 11, 15];
-        int target = 9;
-        int[] expected = [0, 1];
-        int[] result = TwoSum(numbers, target);
+        var numbers = [2, 7, 11, 15];
+        var target = 9;
+        var expected = [0, 1];
+        var actual = TwoSum(numbers, target);
         //普通はAsseeet.AreEqualだが、配列には使えない
-        CollectionAssert.AreEqual(expected, result);
+        CollectionAssert.AreEqual(expected, actual);
     }
-}
-```
-
----
-
-# TwoSum Ansewer
-
-```cs
-private int[] TwoSum(int[] numbers, int target)
-{
-    for (int i = 0; i < numbers.Length; i++)
-    {
-        for (int j = i + 1; j < numbers.Length; j++)
-        {
-            if (target - numbers[i] == numbers[j])
-            {
-                return [i, j];
-            }
-        }
-    }
-    return [];
 }
 ```
 
@@ -115,6 +98,92 @@ private int[] TwoSum(int[] numbers, int target)
       CollectionAssert.AreEqual(expected, actual);
   }
 ```
+
+---
+
+# TwoSum 例
+
+```cs
+private int[] TwoSum(int[] numbers, int target)
+{
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        for (int j = i + 1; j < numbers.Length; j++)
+        {
+            if (target - numbers[i] == numbers[j])
+            {
+                return [i + 1, j + 1];
+            }
+        }
+    }
+    return [];
+}
+```
+
+---
+
+# 計算量を考える
+
+```cs
+private int[] TwoSum(int[] numbers, int target)
+{
+    for (int i = 0; i < numbers.Length; i++)            //O(4), O(3), O(2)
+    {
+        for (int j = i + 1; j < numbers.Length; j++)    //O(4 - (i + 1)), O(3 - (i + 1)), O(2 - (i + 1))
+        {
+            if (target - numbers[i] == numbers[j])
+            {
+                return [i + 1, j + 1];
+            }
+        }
+    }
+    return [];
+}
+```
+
+---
+
+# 計算量
+
+- アルゴリズムを解く時は計算量を意識する
+- 計算量はランダウの$O$記法を使う
+- 計算量は以下のルールで概ねで考える
+  - 最高次数の項以外は落とす: $5x^2+10x+2$ -> $5x^2$
+  - 係数を無視する: $5x^2$-> $x^2$
+- 例えば先ほどの例だと計算量は$n^2$になるので計算量はO(n^2)と書く
+
+---
+
+# 時間計算量 O(N^2)　空間計算量 O(1)
+
+```cs
+private int[] TwoSum(int[] numbers, int target)
+{
+    for (int i = 0; i < numbers.Length; i++)            //O(n)
+    {
+        for (int j = i + 1; j < numbers.Length; j++)    //O(n)
+        {
+            if (target - numbers[i] == numbers[j])
+            {
+                return [i + 1, j + 1];
+            }
+        }
+    }
+    return [];
+}
+```
+
+---
+
+# 計算量を係数を無視できる理由
+
+![alt text](/image/complexityN.png)
+
+---
+
+# 計算量がO(n ^ 2)以上ならO(n log n)以下をめざす理由
+
+![alt text](/image/complexity.png)
 
 ---
 
@@ -152,23 +221,26 @@ public void TestMethod1(int[] numbers, int target, int[] expected)
 
 ---
 
-# 計算量
-
-- アルゴリズムを解く時は計算量を意識する
-- 計算量は、
-
 ---
 
-# 計算量
+# 時間計算量 O(N)　空間計算量 O(N)
 
-![alt text](/image/complexity.png)
+```cs
+private int[] TwoSum(int[] numbers, int target)
+{
+    var map = new Dictionary<int, int>();
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        map[numbers[i]] = i;
+    }
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        if (map.TryGetValue(target - numbers[i], out var value) && value != i)
+        {
+            return [value + 1, i + 1];
+        }
+    }
+}
+```
 
 ---
-
-# 計算量
-
-![alt text](/image/complexityN.png)
-
-```
-
-```
