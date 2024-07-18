@@ -51,9 +51,10 @@ h1 {
 - アカウントを作ってログイン
 - [167. Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
 - LeetCodeでもC#を選んで解くことは可能。無料だとインテリセンスが効かないなど制限もある。
-- ローカルでTestProjectを作る方がおススメ
-- LeetCodeは探せば幾らでも答えは書いてある。性善説で見ない前提。
-- 同じ理由でGithub Copilotは切っておいた方が良いかも。答えを提案されてしまう
+- ローカルでVisual StudioでTestProjectを作る方が何かとおススメ（任意）
+- ついでに今回用にGithubにリポジトリを作ると良いかも（任意）
+- LeetCodeはヒントも、答えも幾らでも書いてある。なるべく解くまでは見ない方が学びが多い。
+- 同じ理由でGithub Copilotは切っておいた方が良いかも。即座に答えを提案されてしまう
 
 ---
 
@@ -151,6 +152,7 @@ private int[] TwoSum(int[] numbers, int target)
   - 最高次数の項以外は落とす: $5x^2+10x+2$ -> $5x^2$
   - 係数を無視する: $5x^2$-> $x^2$
 - 例えば先ほどの例だと計算量は$n^2$になるので計算量はO(n^2)と書く
+- 最初から計算量削減を考えるより慣れるまでは総当たりでもまず解くことが一番！
 
 ---
 
@@ -249,7 +251,7 @@ private int[] TwoSum(int[] numbers, int target)
 - 普通計算量と言えば時間計算量(time complexity)を指すことが多い
 - 一方で空間計算量(space complexity)はどれほどの空間（メモリ）を使うかを表す
 - 先ほどの問題はDictionaryを使っているので空間計算量は$O(n)$
-- 時間計算量 $O(n)$ 空間計算量先$O(1)$で解くことが可能
+- TwoSumは時間計算量$O(n)$空間計算量$O(1)$で解くことが可能
 
 ---
 
@@ -279,6 +281,12 @@ private int[] TwoSum(int[] numbers, int target)
     return [];
 }
 ```
+
+---
+
+# Code Rabbit
+
+- PRして自動レビューを受けてみる
 
 ---
 
