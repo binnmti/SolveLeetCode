@@ -53,6 +53,7 @@ h1 {
 - LeetCodeでもC#を選んで解くことは可能。無料だとインテリセンスが効かないなど制限もある。
 - ローカルでVisual StudioでTestProjectを作る方が何かとおススメ（任意）
 - ついでに今回用にGithubにリポジトリを作ると良いかも（任意）
+- 今回はブランチを切って、マイクロコミットも試してみましょう（任意）
 - LeetCodeはヒントも、答えも幾らでも書いてある。なるべく解くまでは見ない方が学びが多い。
 - 同じ理由でGithub Copilotは切っておいた方が良いかも。即座に答えを提案されてしまう
 
@@ -147,10 +148,10 @@ private int[] TwoSum(int[] numbers, int target)
 # 計算量
 
 - アルゴリズムを解く時は計算量を意識する
-- 計算量はランダウの$O$記法を使う
-- 計算量は以下のルールで概ねで考える
+- 計算量は以下のルールで考える
   - 最高次数の項以外は落とす: $5x^2+10x+2$ -> $5x^2$
   - 係数を無視する: $5x^2$-> $x^2$
+- 計算量はランダウのO記法を使う
 - 例えば先ほどの例だと計算量は$n^2$になるので計算量はO(n^2)と書く
 - 最初から計算量削減を考えるより慣れるまでは総当たりでもまず解くことが一番！
 
@@ -183,13 +184,49 @@ private int[] TwoSum(int[] numbers, int target)
 
 ---
 
-# 計算量がO(n ^ 2)以上ならO(n log n)以下をめざす理由
+# 計算量がO(n^2)以上ならO(nlogn)以下をめざす理由
 
 ![alt text](/image/complexity.png)
 
 ---
 
-# Arrange-Act-Assert(AAA)
+# 計算量の注意点
+
+- ライブラリも内部で計算をしているので、計算量はかかる
+- ループの中で線形探索したら、それは２重ループと一緒
+- アルゴリズムを解く時はライブラリを使わずに解くのも一つ。
+
+```cs
+foreach(var student in students)
+{
+    var score = scores.First(x => x.StudentId == student.Id);
+}
+```
+
+↓
+
+```cs
+foreach(var student in students)
+{
+    foreach(var score in scores)
+    {
+        if (score.StudentId == student.Id)
+        {
+
+        }
+    }
+}
+```
+
+---
+
+# Arrange-Act-Assert(AAA)の紹介
+
+- AAAのパターンが、テスト対象のメソッドの単体テストを記述する一般的な方法
+- Arrange セクションでは、テスト対象のメソッドに渡されるデータの値を設定
+- Act セクションでは、設定されたパラメーターでテスト対象のメソッドを呼び出す
+- Assert セクションでは、テスト対象のメソッドの操作が予測どおりに動作することを検証する
+- Given-When-Then パターンというのもある
 
 ```cs
 public void TestMethod1(int[] numbers, int target, int[] expected)
@@ -206,7 +243,9 @@ public void TestMethod1(int[] numbers, int target, int[] expected)
 
 ---
 
-# Fluent Assertions
+# Fluent Assertionsの紹介
+
+- テストコードを自然言語のように記載することができるフレームワーク
 
 ```cs
 public void TestMethod1(int[] numbers, int target, int[] expected)
@@ -290,7 +329,7 @@ private int[] TwoSum(int[] numbers, int target)
 
 ---
 
-# Extra Stage
+# Extra Stage for LINQ
 
 - [2367. Number of Arithmetic Triplets](https://leetcode.com/problems/number-of-arithmetic-triplets/description/)
 
@@ -316,12 +355,44 @@ private int[] TwoSum(int[] numbers, int target)
 
 ---
 
-# LINQで解く
+# LINQで解く step1/4
 
 ```cs
-    internal int ArithmeticTriplets(int[] nums, int diff)
+    var map = new Dictionary<int, int>();
+    for (int i = 0; i < nums.Length; i++)
     {
-        var map = nums.Select((val, idx) => (val, idx)).ToDictionary(x => x.val, x => x.idx);
-        return nums.Count(x => map.ContainsKey(x + diff) && map.ContainsKey(x + diff + diff));
+        map[nums[i]] = i;
     }
+    return nums.Where(x => map.ContainsKey(x + diff) && map.ContainsKey(x + diff + diff)).Count();
+```
+
+---
+
+# LINQで解く step2/4
+
+```cs
+    var map = new Dictionary<int, int>();
+    for (int i = 0; i < nums.Length; i++)
+    {
+        map[nums[i]] = i;
+    }
+    return Count.Where(x => map.ContainsKey(x + diff) && map.ContainsKey(x + diff + diff));
+```
+
+---
+
+# LINQで解く step3/4
+
+```cs
+    var map = nums.ToDictionary(x => x, idx => idx); //こう書きたい
+    return Count.Where(x => map.ContainsKey(x + diff) && map.ContainsKey(x + diff + diff));
+```
+
+---
+
+# LINQで解く step4/4
+
+```cs
+    var map = nums.Select((val, idx) => (val, idx)).ToDictionary(x => x.val, x => x.idx);
+    return nums.Count(x => map.ContainsKey(x + diff) && map.ContainsKey(x + diff + diff));
 ```
