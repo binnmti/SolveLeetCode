@@ -1,4 +1,7 @@
-﻿namespace SolveLeetCodeTestProject;
+﻿using System;
+using System.Reflection;
+
+namespace SolveLeetCodeTestProject;
 
 [TestClass]
 internal class ValidSudokuTest
@@ -21,44 +24,47 @@ internal class ValidSudokuTest
         Assert.AreEqual(ret, true);
     }
 
+    //Time complexity O(n^2)
+    //Space complexity O(1)
     bool IsValidSudoku(char[][] board)
     {
         for (int row = 0; row < 9; row++)
         {
-            var dic = new Dictionary<int, char>();
+            var hash = new HashSet<char>();
             for (int col = 0; col < 9; col++)
             {
-                if (board[row][col] == '.') continue;
-                if (dic.ContainsValue(board[row][col])) return false;
-                dic[col] = board[row][col];
+                var index = board[row][col];
+                if (index == '.') continue;
+                if (hash.Contains(index)) return false;
+                hash.Add(index);
             }
         }
         for (int col = 0; col < 9; col++)
         {
-            var dic = new Dictionary<int, char>();
+            var hash = new HashSet<char>();
             for (int row = 0; row < 9; row++)
             {
-                if (board[row][col] == '.') continue;
-                if (dic.ContainsValue(board[row][col])) return false;
-                dic[col] = board[row][col];
+                var index = board[row][col];
+                if (index == '.') continue;
+                if (hash.Contains(index)) return false;
+                hash.Add(index);
             }
         }
-
         for (int box = 0; box < 9; box++)
         {
-            var dic = new Dictionary<int, char>();
+            var hash = new HashSet<char>();
             for (int row = 0; row < 3; row++)
             {
                 for (int col = 0; col < 3; col++)
                 {
-                    var cIndex = box % 3 + col;
-                    var rIndex = box / 3 + row;
+                    var cIndex = 3 * (box % 3) + col;
+                    var rIndex = 3 * (box / 3) + row;
+                    var index = board[rIndex][cIndex];
 
-                    if (board[rIndex][cIndex] == '.') continue;
-                    if (dic.ContainsValue(board[rIndex][cIndex])) return false;
-                    dic[rIndex * 3 + cIndex] = board[rIndex][cIndex];
+                    if (index == '.') continue;
+                    if (hash.Contains(index)) return false;
+                    hash.Add(index);
                 }
-
             }
         }
         return true;
