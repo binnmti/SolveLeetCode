@@ -1,16 +1,13 @@
-﻿using System;
-using System.Reflection;
-
-namespace SolveLeetCodeTestProject;
+﻿namespace SolveLeetCodeTestProject;
 
 [TestClass]
-internal class LongestConsecutiveSequenceTest
+public class LongestConsecutiveSequenceTest
 {
     [TestMethod]
     public void LongestConsecutiveSequence()
     {
-        var ret = LongestConsecutiveSequence([2, 20, 4, 10, 3, 4, 5]);
-        Assert.AreEqual(ret, 4);
+        Assert.AreEqual(LongestConsecutiveSequence([2, 20, 4, 10, 3, 4, 5]), 4);
+        Assert.AreEqual(LongestConsecutiveSequence([0, 3, 2, 5, 4, 6, 1, 1]), 7);
     }
 
     public int LongestConsecutiveSequence(int[] nums)
