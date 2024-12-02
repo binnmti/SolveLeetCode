@@ -12,29 +12,27 @@ public class LongestConsecutiveSequenceTest
 
     public int LongestConsecutiveSequence(int[] nums)
     {
-        // Time complexity: O(n log n)
-        // Space complexity: O(1)
+        // Time complexity: O(n)
+        // Space complexity: O(n)
         if (nums.Length == 0) return 0;
 
-        Array.Sort(nums);
-
-        int consecutiveMax = 1;
-        int consecutive = 1;
-        for (int i = 0; i < nums.Length - 1; i++)
+        var hash = new HashSet<int>();
+        for (int i = 0; i < nums.Length; i++)
         {
-            if (nums[i] == nums[i + 1]) continue;
-
-            if (nums[i] + 1 == nums[i + 1])
-            {
-                consecutive++;
-                consecutiveMax = Math.Max(consecutiveMax, consecutive);
-            }
-            else
-            {
-                consecutive = 1;
-            }
+            hash.Add(nums[i]);
         }
 
+        int consecutiveMax = 1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int offset = 1;
+            while (hash.Contains(nums[i] + offset))
+            {
+                offset++;
+                Console.WriteLine(offset);
+            }
+            consecutiveMax = Math.Max(consecutiveMax, offset);
+        }
         return consecutiveMax;
     }
 }
