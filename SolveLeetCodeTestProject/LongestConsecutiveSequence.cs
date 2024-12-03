@@ -15,13 +15,7 @@ public class LongestConsecutiveSequenceTest
         // Time complexity: O(n)
         // Space complexity: O(n)
         if (nums.Length == 0) return 0;
-
-        var hash = new HashSet<int>();
-        for (int i = 0; i < nums.Length; i++)
-        {
-            hash.Add(nums[i]);
-        }
-
+        var hash = new HashSet<int>(nums);
         int consecutiveMax = 1;
         for (int i = 0; i < nums.Length; i++)
         {
