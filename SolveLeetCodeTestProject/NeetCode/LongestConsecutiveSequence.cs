@@ -1,4 +1,4 @@
-﻿namespace SolveLeetCodeTestProject;
+﻿namespace SolveLeetCodeTestProject.NeetCode;
 
 [TestClass]
 public class LongestConsecutiveSequenceTest

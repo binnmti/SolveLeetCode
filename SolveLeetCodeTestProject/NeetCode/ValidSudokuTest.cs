@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SolveLeetCodeTestProject;
+namespace SolveLeetCodeTestProject.NeetCode;
 
 [TestClass]
 internal class ValidSudokuTest
