@@ -6,7 +6,7 @@ public class EvaluateReversePolishNotationTest
     [TestMethod]
     public void EvaluateReversePolishNotation()
     {
-        Assert.AreEqual(EvalRPN(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]), 5);
+        Assert.AreEqual(EvalRPN(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]), 22);
     }
 
     public int EvalRPN(string[] tokens)
