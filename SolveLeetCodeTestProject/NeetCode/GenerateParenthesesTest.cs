@@ -10,45 +10,30 @@ internal class GenerateParenthesesTest
         Assert.AreEqual(ret, ["()"]);
     }
 
-    private static bool Valid(string str)
+    private static void Dfs(int open, int close, int n, List<string> parentheses, string s)
     {
-        int open = 0;
-        foreach (var s in str)
+        if (open == close && open == n)
         {
-            if (s == '(')
-            {
-                open++;
-            }
-            else
-            {
-                open--;
-            }
-            if (open < 0) return false;
-        }
-        return open == 0;
-    }
-
-    private static void Dfs(string str, List<string> list, int n)
-    {
-        if (str.Length == 2 * n)
-        {
-            if (Valid(str))
-            {
-                list.Add(str);
-            }
+            parentheses.Add(s);
             return;
         }
-        Dfs(str + "(", list, n);
-        Dfs(str + ")", list, n);
+        if (open < n)
+        {
+            Dfs(open + 1, close, n, parentheses, s + "(");
+        }
+        if (open > close)
+        {
+            Dfs(open, close + 1, n, parentheses, s + ")");
+        }
     }
 
-    // Time complexity O(2^2n * n)
-    // Space complexity O(2^2n * n)
-    public List<string> GenerateParenthesis(int n)
+    //Time complexity O(4^n/\sqrt{n})
+    //Space complexity O(n)
+    public static List<string> GenerateParenthesis(int n)
     {
-        var list = new List<string>();
-        Dfs("", list, n);
-        return list;
+        var parentheses = new List<string>();
+        Dfs(0, 0, n, parentheses, "");
+        return parentheses;
     }
 }
 
