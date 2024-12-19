@@ -6,33 +6,27 @@ public class DailyTemperaturesTest
     [TestMethod]
     public void DailyTemperatures()
     {
-        Assert.ReferenceEquals(DailyTemperatures([30, 38, 30, 36, 35, 40, 28]), new int [1, 4, 1, 2, 1, 0, 0]);
-        Assert.ReferenceEquals(DailyTemperatures([22, 21, 20]), new int[0, 0, 0]);
+        ReferenceEquals(DailyTemperatures([30, 38, 30, 36, 35, 40, 28]), new int[1, 4, 1, 2, 1, 0, 0]);
+        ReferenceEquals(DailyTemperatures([22, 21, 20]), new int[0, 0, 0]);
     }
 
+    //Time complexity O(n)
+    //Space complexity O(n)
     public static int[] DailyTemperatures(int[] temperatures)
     {
-        var warmerDays = new List<int>();
+        var list = new int[temperatures.Length];
+        var stack = new Stack<(int, int)>();
         for (int i = 0; i < temperatures.Length; i++)
         {
-            bool hit = false;
-            int day = 1;
-            for (int j = i + 1; j < temperatures.Length; j++)
+            var temperature = temperatures[i];
+            while (stack.Count > 0 && temperature > stack.Peek().Item2)
             {
-                if (temperatures[i] < temperatures[j])
-                {
-                    warmerDays.Add(day);
-                    hit = true;
-                    break;
-                }
-                day++;
+                var (idx, _) = stack.Pop();
+                list[idx] = i - idx;
             }
-            if (!hit)
-            {
-                warmerDays.Add(0);
-            }
+            stack.Push((i, temperature));
         }
-        return warmerDays.ToArray();
+        return list;
     }
 }
 
