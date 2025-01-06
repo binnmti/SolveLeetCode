@@ -1,13 +1,13 @@
 ﻿namespace SolveLeetCodeTestProject.NeetCode;
 
 [TestClass]
-internal class GenerateParenthesesTest
+public class GenerateParenthesesTest
 {
     [TestMethod]
     public void GenerateParentheses()
     {
         var ret = GenerateParenthesis(1);
-        Assert.AreEqual(ret, ["()"]);
+        ReferenceEquals(ret, new List<string>() { "()" });
     }
 
     private static void Dfs(int open, int close, int n, List<string> parentheses, string s)
