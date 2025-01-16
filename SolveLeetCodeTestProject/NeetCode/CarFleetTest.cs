@@ -1,29 +1,34 @@
 ﻿namespace SolveLeetCodeTestProject.NeetCode;
 
 [TestClass]
-public class TwoIntegerSumIITest
+public class CarFleetTest
 {
     [TestMethod]
-    public void TwoIntegerSumII()
+    public void CarFleet()
     {
-        ReferenceEquals(TwoSum([1, 2, 3, 4], 3), new int[] { 1, 2 });
+        Assert.AreEqual(CarFleet(31, [5, 26, 18, 25, 29, 21, 22, 12, 19, 6], [7, 6, 6, 4, 3, 4, 9, 7, 6, 4]), 6);
+        Assert.AreEqual(CarFleet(20, [6, 2, 17], [3, 9, 2]), 2);
+        Assert.AreEqual(CarFleet(10, [8, 3, 7, 4, 6, 5], [4, 4, 4, 4, 4, 4]), 6);
+        Assert.AreEqual(CarFleet(10, [0, 4, 2], [2, 1, 3]), 1);
+        Assert.AreEqual(CarFleet(10, [1, 4], [3, 2]), 1);
+        Assert.AreEqual(CarFleet(10, [4, 1, 0, 7], [2, 2, 1, 1]), 3);
     }
 
-    //Time complexity O(n^2)
-    //Space complexity O(1)
-    public int[] TwoSum(int[] numbers, int target)
+    //Time complexity O(n lon n)
+    //Space complexity O(n)
+    public int CarFleet(int target, int[] position, int[] speed)
     {
-        for (int i = 0; i < numbers.Length; i++)
+        var positionAndSpeeds = position.Select((p, idx) => (p, speed[idx])).OrderByDescending(x => x.p);
+        var stack = new Stack<double>();
+        foreach (var (p, s) in positionAndSpeeds)
         {
-            for (int j = i + 1; j < numbers.Length; j++)
+            stack.Push(((double)target - p) / s);
+            if (stack.Count >= 2 && stack.Peek() <= stack.ElementAt(1))
             {
-                if (numbers[i] + numbers[j] == target)
-                {
-                    return new List<int>() { i + 1, j + 1 }.ToArray();
-                }
+                stack.Pop();
             }
         }
-        return [];
+        return stack.Count;
     }
 }
 
