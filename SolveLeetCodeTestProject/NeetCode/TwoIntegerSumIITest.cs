@@ -10,17 +10,17 @@ public class TwoIntegerSumIITest
     }
 
     //Time complexity O(n)
-    //Space complexity O(n)
+    //Space complexity O(1)
     private int[] TwoSum(int[] numbers, int target)
     {
-        var dic = numbers.Select((v, i) => new { v, i }).ToDictionary(x => x.v, x => x.i);
-        foreach (var (v, i) in dic)
+        int left = 0;
+        int right = numbers.Length - 1;
+        for (int i = 0; i < numbers.Length; i++)
         {
-            var diff = target - v;
-            if (dic.TryGetValue(diff, out var value))
-            {
-                return [i + 1, value + 1];
-            }
+            var add = numbers[left] + numbers[right];
+            if (add > target) right--;
+            else if (add < target) left++;
+            else if (add == target) return [left + 1, right + 1];
         }
         return [];
     }
