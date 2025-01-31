@@ -11,34 +11,31 @@ public class TrappingRainWaterTest
         Assert.AreEqual(Trap([4, 2, 0, 3, 2, 5]), 9);
     }
 
-    //Time complexity O(n^2*m)
+    //Time complexity O(n)
     //Space complexity O(1)
     public int Trap(int[] height)
     {
-        var output = 0;
-        var currentHeight = 1;
-        // １段ずつ見て行って、左右に自分より高いものがあればそこは水が入る
-        while (currentHeight <= height.Max())
+        var left = 0;
+        var right = height.Length - 1;
+        var maxLeft = height[left];
+        var maxRight = height[right];
+        int water = 0;
+        while (left < right)
         {
-            for (int i = 1; i < height.Length - 1; i++)
+            if (maxLeft < maxRight)
             {
-                // 左が現在の高さより低ければ何もしない
-                if (height[i - 1] <= height[i]) continue;
-                if (currentHeight <= height[i] || currentHeight > height[i - 1]) continue;
-
-                // 右に壁があれば終わり
-                for (int j = i + 1; j <= height.Length - 1; j++)
-                {
-                    if (height[j] < currentHeight) continue;
-
-                    output += j - i;
-                    i += j - i;
-                    break;
-                }
+                left++;
+                maxLeft = Math.Max(maxLeft, height[left]);
+                water += maxLeft - height[left];
             }
-            currentHeight++;
+            else
+            {
+                right--;
+                maxRight = Math.Max(maxRight, height[right]);
+                water += maxRight - height[right];
+            }
         }
-        return output;
+        return water;
     }
 }
 
