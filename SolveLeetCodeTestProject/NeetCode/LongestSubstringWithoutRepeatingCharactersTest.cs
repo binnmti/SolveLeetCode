@@ -9,30 +9,22 @@ public class LongestSubstringWithoutRepeatingCharactersTest
         Assert.AreEqual(LengthOfLongestSubstring("zxyzxyz"), 3);
     }
 
-    //Time complexity O(n^2 * m)
-    //Space complexity O(1)
+    //Time complexity O(n)
+    //Space complexity O(n)
     public int LengthOfLongestSubstring(string s)
     {
+        int l = 0;
+        var hs = new HashSet<char>();
         int max = 0;
-        // 1文字ずつふやしていき、つど同じ文字があるかチェック。
-        for (int i = 0; i < s.Length; i++)
+        for (int r = 0; r < s.Length; r++)
         {
-            for (int j = 1; j <= s.Length; j++)
+            while (hs.Contains(s[r]))
             {
-                if (i + j > s.Length) break;
-
-                var str = s.Substring(i, j);
-                var hs = new HashSet<char>();
-                foreach (var c in str)
-                {
-                    if (hs.Contains(c))
-                    {
-                        break;
-                    }
-                    hs.Add(c);
-                }
-                max = Math.Max(max, j);
+                hs.Remove(s[l]);
+                l++;
             }
+            hs.Add(s[r]);
+            max = Math.Max(max, r - l + 1);
         }
         return max;
     }
