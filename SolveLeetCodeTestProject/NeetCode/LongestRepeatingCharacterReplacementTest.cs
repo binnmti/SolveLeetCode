@@ -13,22 +13,22 @@ public class LongestRepeatingCharacterReplacementTest
     //Space complexity O(n)
     public int CharacterReplacement(string s, int k)
     {
+        var dic = new Dictionary<char, int>();
+        int l = 0;
+        int max = 0;
         int result = 0;
-        for (int i = 0; i < s.Length; i++)
+        for (int r = 0; r < s.Length; r++)
         {
-            int max = 0;
-            var dic = new Dictionary<char, int>();
-            for (int j = i; j < s.Length; j++)
+            var key = s[r];
+            dic[key] = dic.ContainsKey(key) ? dic[key] + 1 : 1;
+            max = Math.Max(dic[key], max);
+
+            while ((r - l + 1) - max > k)
             {
-                var key = s[j];
-                int co = dic.ContainsKey(key) ? dic[key] + 1 : 1;
-                dic[key] = co;
-                max = Math.Max(co, max);
-                if ((j - i + 1) - max <= k)
-                {
-                    result = Math.Max(result, j - i + 1);
-                }
+                dic[s[l]]--;
+                l++;
             }
+            result = Math.Max(result, r - l + 1);
         }
         return result;
     }
