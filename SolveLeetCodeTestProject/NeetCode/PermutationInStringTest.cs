@@ -10,25 +10,41 @@ public class PermutationInStringTest
         Assert.AreEqual(CheckInclusion("abc", "lecabee"), true);
     }
 
-    // Time complexity: O(n + m)
-    // Space complexity: O(1)
-    public bool CheckInclusion(string s1, string s2)
+    // Time complexity: O(n)
+    // Space complexity: O(n)
+    public static bool CheckInclusion(string s1, string s2)
     {
-        var dic1 = new Dictionary<char, int>();
-        foreach (var c1 in s1)
+        if (s1.Length > s2.Length) return false;
+
+        var s1Count = new int[26];
+        var s2Count = new int[26];
+
+        for (int i = 0; i < s1.Length; i++)
         {
-            dic1[c1] = dic1.TryGetValue(c1, out int value) ? value + 1 : 1;
+            s1Count[s1[i] - 'a']++;
+            s2Count[s2[i] - 'a']++;
         }
-        for (int i = 0; i <= s2.Length - s1.Length; i++)
+        if (IsEqual(s1Count, s2Count)) return true;
+        for (int i = s1.Length; i < s2.Length; i++)
         {
-            var dic2 = new Dictionary<char, int>();
-            foreach (var c2 in s2.Substring(i, s1.Length))
-            {
-                dic2[c2] = dic2.TryGetValue(c2, out int value) ? value + 1 : 1;
-            }
-            if (!dic1.Any(x => !dic2.TryGetValue(x.Key, out int value) || x.Value != value)) return true;
+            s2Count[s2[i] - 'a']++;
+            s2Count[s2[i - s1.Length] - 'a']--;
+
+            if (IsEqual(s1Count, s2Count)) return true;
         }
         return false;
+    }
+
+    private static bool IsEqual(int[] s1Count, int[] s2Count)
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            if (s1Count[i] != s2Count[i])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
