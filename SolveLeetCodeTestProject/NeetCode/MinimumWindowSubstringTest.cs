@@ -6,8 +6,9 @@ public class MinimumWindowSubstringTest
     [TestMethod]
     public void MinimumWindowSubstring()
     {
-        Assert.AreEqual(MinWindow("abbbbbcdd", "abcdd"), "abbbbbcdd");
+        //Assert.AreEqual(MinWindow("abbbbbcdd", "abcdd"), "abbbbbcdd");
         //Assert.AreEqual(MinWindow("ADOBECODEBANC", "ABC"), "BANC");
+        Assert.AreEqual(MinWindow("OUZODYXAZV", "XYZ"), "YXAZ");
     }
 
     // Time complexity: O(n^3)
@@ -15,54 +16,64 @@ public class MinimumWindowSubstringTest
     public string MinWindow(string s, string t)
     {
         if (s.Length < t.Length) return "";
+
+        var tDic = new Dictionary<char, int>();
+        foreach (var c in t)
+        {
+            tDic[c] = tDic.ContainsKey(c) ? tDic[c] + 1 : 1;
+        }
+
         // tは短い。sは長い。sから、tを含む塊を取得する。tのSlide Windowsは決まっていそう
         string min = "";
-        for (int l = 0; l < s.Length; l++)
+        int l = 0;
+        for (int r = 0; r < s.Length; r++)
         {
-            for (int r = l; r < s.Length; r++)
+            var sDic = new Dictionary<char, int>();
+            foreach (var c in s[l..(r + 1)])
             {
-                var s_sub = s[l..(r+1)];
-                // t と s_subで tが全部含まれていればOK。
-                if (IsEqual(s_sub, t))
+                sDic[c] = sDic.ContainsKey(c) ? sDic[c] + 1 : 1;
+            }
+
+            // ここでlを進め条件チェック
+            while(l < r && (!tDic.ContainsKey(s[l]) || sDic[s[l]] > tDic[s[l]]))
+            {
+                l++;
+            }
+
+            sDic.Clear();
+            foreach (var c in s[l..(r + 1)])
+            {
+                sDic[c] = sDic.ContainsKey(c) ? sDic[c] + 1 : 1;
+            }
+
+            // ここで条件チェック
+            bool error = false;
+            foreach (var (k, v) in tDic)
+            {
+                if (!sDic.ContainsKey(k))
                 {
-                    if (min == "" || min.Length > s_sub.Length)
+                    error = true;
+                    break;
+                }
+                else
+                {
+                    if (sDic[k] < v)
                     {
-                        min = s_sub;
+                        error = true;
+                        break;
                     }
+                }
+            }
+            if (!error)
+            {
+                if (min == "" || s[l..(r + 1)].Length < min.Length)
+                {
+                    min = s[l..(r + 1)];
                 }
             }
         }
         return min;
     }
 
-    private bool IsEqual(string sSub, string t)
-    {
-        var sDic = new Dictionary<char, int>();
-        var tDic = new Dictionary<char, int>();
-        foreach (var c in t)
-        {
-            tDic[c] = tDic.ContainsKey(c) ? tDic[c] + 1 : 1;
-        }
-        foreach (var c in sSub)
-        {
-            sDic[c] = sDic.ContainsKey(c) ? sDic[c] + 1 : 1;
-        }
-
-        foreach (var (k, v) in tDic)
-        {
-            if (!sDic.ContainsKey(k))
-            {
-                return false;
-            }
-            else
-            {
-                if (sDic[k] < v)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 }
 
