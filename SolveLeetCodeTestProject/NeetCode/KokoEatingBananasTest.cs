@@ -12,38 +12,24 @@ public class KokoEatingBananasTest
         Assert.AreEqual(MinEatingSpeed([1, 4, 3, 2], 9), 2);
     }
 
-    // Time complexity: O(n * m * k)
+    // Time complexity: O(n * m)
     // Space complexity: O(1)
     public int MinEatingSpeed(int[] piles, int h)
     {
         for (int speed = 1; speed <= piles.Max(x => x); speed++)
         {
-            bool isClear = true;
-            int eat = 0;
+            long sum = 0;
             foreach (var pile in piles)
             {
-                bool isFinish = false;
-                for (int count = 1; count <= h; count++)
-                {
-                    if (pile <= speed * count)
-                    {
-                        isFinish = true;
-                        eat += count;
-                        break;
-                    }
-                }
-                if (!isFinish || eat > h)
-                {
-                    isClear = false;
-                    break;
-                }
+                sum += (int)Math.Ceiling((double)pile / speed);
             }
-            if (isClear)
+            if (sum <= h)
             {
                 return speed;
             }
         }
         return -1;
+
     }
 }
 
