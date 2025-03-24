@@ -32,6 +32,8 @@ internal static class ListNodeExtensions
     }
 
     internal static ListNode Reverse(this ListNode? listNode)
-        => listNode.ToArray().Reverse().ToArray().ToListNode();
-
+    {
+        listNode.Reverse();
+        return listNode.ToArray().ToListNode();
+    }
 }
