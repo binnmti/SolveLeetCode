@@ -8,11 +8,11 @@ public class TimeBasedKeyValueStoreTest
     [TestMethod]
     public void TimeBasedKeyValueStore()
     {
-        TimeMap timeMap = new TimeMap();
-        timeMap.Set("key1", "value1", 10);
-        timeMap.Get("key1", 1);
-        timeMap.Get("key1", 10);
-        timeMap.Get("key1", 11);
+        //TimeMap timeMap = new TimeMap();
+        //timeMap.Set("key1", "value1", 10);
+        //timeMap.Get("key1", 1);
+        //timeMap.Get("key1", 10);
+        //timeMap.Get("key1", 11);
 
         //TimeMap timeMap = new TimeMap();
         //timeMap.Set("foo", "bar", 1);
@@ -22,25 +22,19 @@ public class TimeBasedKeyValueStoreTest
         //timeMap.Get("foo", 4);
         //timeMap.Get("foo", 5);
 
-        //TimeMap timeMap = new TimeMap();
-        //timeMap.Set("alice", "happy", 1);  // store the key "alice" and value "happy" along with timestamp = 1.
-        //timeMap.Get("alice", 1);           // return "happy"
-        //timeMap.Get("alice", 2);           // return "happy", there is no value stored for timestamp 2, thus we return the value at timestamp 1.
-        //timeMap.Set("alice", "sad", 3);    // store the key "alice" and value "sad" along with timestamp = 3.
-        //timeMap.Get("alice", 3);           // return "sad"
+        TimeMap timeMap = new TimeMap();
+        timeMap.Set("alice", "happy", 1);  // store the key "alice" and value "happy" along with timestamp = 1.
+        var x = timeMap.Get("alice", 1);           // return "happy"
+        var y = timeMap.Get("alice", 2);           // return "happy", there is no value stored for timestamp 2, thus we return the value at timestamp 1.
+        timeMap.Set("alice", "sad", 3);    // store the key "alice" and value "sad" along with timestamp = 3.
+        var z = timeMap.Get("alice", 3);           // return "sad"
     }
-
-    //Time complexity O(n lon n)
-    //Space complexity O(n)
-    //public int CarFleet(int target, int[] position, int[] speed)
-    //{
-    //}
 }
 
 
 public class TimeMap
 {
-    Dictionary<string, Dictionary<int, string>> dic = new();
+    Dictionary<string, List<(int, string)>> dic = new();
 
     public TimeMap()
     {
@@ -48,40 +42,39 @@ public class TimeMap
 
     public void Set(string key, string value, int timestamp)
     {
-        if (dic.TryGetValue(key, out Dictionary<int, string>? v))
+        if (dic.TryGetValue(key, out var v))
         {
-            v.Add(timestamp, value);
+            v.Add((timestamp, value));
         }
         else
         {
-            var v2 = new Dictionary<int, string>
-            {
-                { timestamp, value }
-            };
-            dic.Add(key, v2);
+            dic.Add(key, new List<(int, string)> { { (timestamp, value) } });
         }
     }
 
-
     public string Get(string key, int timestamp)
     {
-        if (!dic.TryGetValue(key, out Dictionary<int, string>? hit)) return "";
-        if (hit.TryGetValue(timestamp, out string? value))
+        if (!dic.TryGetValue(key, out var hit))
         {
-            return value;
+            return "";
         }
-        else
+        var l = 0;
+        var r = hit.Count - 1;
+        string last = "";
+        while (l <= r)
         {
-            string last = "";
-            foreach (var kvp in hit)
+            var c = l + (r - l) / 2;
+            if (hit[c].Item1 <= timestamp)
             {
-                if (kvp.Key < timestamp)
-                {
-                    last = kvp.Value;
-                }
+                last = hit[c].Item2;
+                l = c + 1;
             }
-            return last;
+            else
+            {
+                r = c - 1;
+            }
         }
+        return last;
     }
 }
 
