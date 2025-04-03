@@ -22,12 +22,12 @@ public class TimeBasedKeyValueStoreTest
         //timeMap.Get("foo", 4);
         //timeMap.Get("foo", 5);
 
-        TimeMap timeMap = new TimeMap();
-        timeMap.Set("alice", "happy", 1);  // store the key "alice" and value "happy" along with timestamp = 1.
-        var x = timeMap.Get("alice", 1);           // return "happy"
-        var y = timeMap.Get("alice", 2);           // return "happy", there is no value stored for timestamp 2, thus we return the value at timestamp 1.
-        timeMap.Set("alice", "sad", 3);    // store the key "alice" and value "sad" along with timestamp = 3.
-        var z = timeMap.Get("alice", 3);           // return "sad"
+        //TimeMap timeMap = new TimeMap();
+        //timeMap.Set("alice", "happy", 1);  // store the key "alice" and value "happy" along with timestamp = 1.
+        //var x = timeMap.Get("alice", 1);           // return "happy"
+        //var y = timeMap.Get("alice", 2);           // return "happy", there is no value stored for timestamp 2, thus we return the value at timestamp 1.
+        //timeMap.Set("alice", "sad", 3);    // store the key "alice" and value "sad" along with timestamp = 3.
+        //var z = timeMap.Get("alice", 3);           // return "sad"
     }
 }
 

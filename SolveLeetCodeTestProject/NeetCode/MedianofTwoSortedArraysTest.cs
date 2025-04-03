@@ -6,33 +6,59 @@ public class MedianofTwoSortedArraysTest
     [TestMethod]
     public void MedianofTwoSortedArrays()
     {
-        Assert.AreEqual(FindMedianSortedArrays([1, 2], [3]), 2.0);
+        Assert.AreEqual(FindMedianSortedArrays([], [2,3]), 2.5);
+        Assert.AreEqual(FindMedianSortedArrays([2], []), 2);
+        Assert.AreEqual(FindMedianSortedArrays([], [1]), 1);
         Assert.AreEqual(FindMedianSortedArrays([1, 3], [2, 4]), 2.5);
+        Assert.AreEqual(FindMedianSortedArrays([1, 2], [3, 4]), 2.5);
+        Assert.AreEqual(FindMedianSortedArrays([1, 2], [3]), 2.0);
     }
 
-    // Time complexity: O((n + m)log(n + m))
+    // Time complexity: O(n + m)
     // Space complexity: O(n + m)
     public double FindMedianSortedArrays(int[] nums1, int[] nums2)
     {
-        var numsAll = new List<int>();
-        foreach (var n1 in nums1)
+        var half = (nums1.Length + nums2.Length) / 2;
+        var mins = new List<int>();
+        int co1 = 0;
+        int co2 = 0;
+        bool nums1Flag = nums2.Length == 0;
+        bool nums2Flag = nums1.Length == 0;
+        for (int i = 0; i <= half; i++)
         {
-            numsAll.Add(n1);
+            if (nums1Flag)
+            {
+                mins.Add(nums1[co1]);
+                co1++;
+            }
+            else if (nums2Flag)
+            {
+                mins.Add(nums2[co2]);
+                co2++;
+            }
+            else
+            {
+                if (nums1[co1] < nums2[co2])
+                {
+                    mins.Add(nums1[co1]);
+                    co1++;
+                    if (co1 == nums1.Length) nums2Flag = true;
+                }
+                else
+                {
+                    mins.Add(nums2[co2]);
+                    co2++;
+                    if (co2 == nums2.Length) nums1Flag = true;
+                }
+            }
         }
-        foreach (var n2 in nums2)
+        if ((nums1.Length + nums2.Length) % 2 == 0)
         {
-            numsAll.Add(n2);
-        }
-        numsAll = numsAll.OrderBy(x => x).ToList();
-        if ((numsAll.Count % 2) == 0)
-        {
-            var c1 = numsAll.ElementAt(numsAll.Count / 2 - 1);
-            var c2 = numsAll.ElementAt(numsAll.Count / 2);
-            return (double)(c1 + c2) / 2;
+            return (double)(mins.ElementAt(mins.Count - 2) + mins.ElementAt(mins.Count - 1)) / 2;
         }
         else
         {
-            return numsAll.ElementAt(numsAll.Count / 2);
+            return mins.ElementAt(mins.Count - 1);
         }
     }
 }
