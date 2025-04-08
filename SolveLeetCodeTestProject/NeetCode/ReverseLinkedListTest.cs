@@ -22,23 +22,16 @@ public class ReverseLinkedListTest
     // Space complexity: O(n)
     public ListNode ReverseList(ListNode head)
     {
-        if (head == null) return null;
-
-        var reverse = new List<int>();
-        while (head != null)
+        ListNode prev = null!;
+        var current = head;
+        while (current != null)
         {
-            reverse.Add(head.val);
-            head = head.next;
+            var temp = current.next;
+            current.next = prev;
+            prev = current;
+            current = temp;
         }
-
-        var newListNode = new ListNode(reverse.Last());
-        var next = newListNode;
-        for (var i = reverse.Count - 1 - 1; i >= 0; i--)
-        {
-            next.next = new ListNode(reverse[i]);
-            next = next.next;
-        }
-        return newListNode;
+        return prev;
     }
 }
 
