@@ -22,44 +22,31 @@ public class MergeTwoSortedLinkedListsTest
     // Space complexity: O(n)
     public ListNode MergeTwoLists(ListNode list1, ListNode list2)
     {
-        if (list1 == null && list2 == null) return null;
-
-        var newList = new ListNode();
-        var nextList = newList;
-        var current1 = list1;
-        var current2 = list2;
-        while (current1 != null || current2 != null)
+        var dummy = new ListNode();
+        var node = dummy;
+        while (list1 != null && list2 != null)
         {
-            if (current1 != null)
+            if (list1.val < list2.val)
             {
-                if (current2 == null || current1.val <= current2.val)
-                {
-                    nextList.val = current1.val;
-                    current1 = current1.next;
-                    if (current1 != null || current2 != null)
-                    {
-                        nextList.next = new ListNode();
-                        nextList = nextList.next;
-                    }
-                }
+                node.next = list1;
+                list1 = list1.next;
             }
-
-            if (current2 != null)
+            else
             {
-                if (current1 == null || current1.val >= current2.val)
-                {
-                    nextList.val = current2.val;
-                    current2 = current2.next;
-                    if (current1 != null || current2 != null)
-                    {
-                        nextList.next = new ListNode();
-                        nextList = nextList.next;
-                    }
-                }
+                node.next = list2;
+                list2 = list2.next;
             }
+            node = node.next;
         }
-        nextList = null;
-        return newList;
+        if (list1 != null)
+        {
+            node.next = list1;
+        }
+        else
+        {
+            node.next = list2;
+        }
+        return dummy.next;
     }
 }
 
