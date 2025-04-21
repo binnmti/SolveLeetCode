@@ -15,6 +15,20 @@ public class RemoveNodeFromEndofLinkedListTest
     // Space complexity: O(n)
     public ListNode RemoveNthFromEnd(ListNode head, int n)
     {
+        var lists = new List<ListNode>();
+        var current = head;
+        while (current != null)
+        {
+            lists.Add(current);
+            current = current.next;
+        }
+
+        var removeIndex = lists.Count - n;
+        if (removeIndex == 0)
+        {
+            return head.next;
+        }
+        lists[removeIndex - 1].next = lists[removeIndex].next;
         return head;
     }
 }
