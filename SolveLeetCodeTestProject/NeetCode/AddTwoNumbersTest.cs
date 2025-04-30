@@ -15,25 +15,25 @@ public class AddTwoNumbersTest
     // Space complexity: O(n)
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
     {
-        var dummy = new ListNode();
-        var current = dummy;
+        var node = new ListNode();
+        var current = node;
         var carry = 0;
         while (l1 != null || l2 != null || carry != 0)
         {
-            var v1 = l1 != null ? l1.val : 0;
-            var v2 = l2 != null ? l2.val : 0;
+            var sum = 0;
+            if (l1 != null) sum += l1.val;
+            if (l2 != null) sum += l2.val;
 
-            var val = v1 + v2 + carry;
-            carry = val / 10;
-            val = val % 10;
+            var val = (sum + carry) % 10;
 
             current.next = new ListNode(val);
             current = current.next;
 
+            carry = (sum + carry) / 10;
             l1 = l1?.next;
             l2 = l2?.next;
         }
-        return dummy.next;
+        return node.next;
     }
 }
 
