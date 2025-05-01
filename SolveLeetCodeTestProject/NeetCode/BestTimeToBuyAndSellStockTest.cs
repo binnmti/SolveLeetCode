@@ -1,28 +1,34 @@
 ﻿namespace SolveLeetCodeTestProject.NeetCode;
 
 [TestClass]
-public class FindTheDuplicateNumberTest
+public class BestTimeToBuyAndSellStockTest
 {
     [TestMethod]
-    public void FindTheDuplicateNumber()
+    public void BestTimeToBuyAndSellStock()
     {
-        Assert.AreEqual(FindDuplicate([1, 2, 3, 2, 2]), 2);
+        Assert.AreEqual(MaxProfit([10, 1, 5, 6, 7, 1]), 6);
     }
 
     // Time complexity: O(n)
-    // Space complexity: O(n)
-    public int FindDuplicate(int[] nums)
+    // Space complexity: O(1)
+    public int MaxProfit(int[] prices)
     {
-        var hash = new HashSet<int>();
-        foreach (var n in nums)
+        int priceMax = -1;
+        int priceMin = 100;
+        int profit = 0;
+        for (int i = prices.Length - 1; i >= 0; i--)
         {
-            if (hash.Contains(n))
+            if (prices[i] > priceMax)
             {
-                return n;
+                priceMax = prices[i];
+                priceMin = 100;
             }
-            hash.Add(n);
+            if (prices[i] < priceMin)
+            {
+                priceMin = prices[i];
+                profit = Math.Max(profit, priceMax - priceMin);
+            }
         }
-        return 0;
+        return profit;
     }
 }
-
